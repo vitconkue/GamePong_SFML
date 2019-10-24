@@ -1,14 +1,25 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "TheGame.h"
+#include "Menu.h"
 
 int main()
 {
-	TheGame g; 
-	while (!g.getWindow()->IsDone())
+
+	Menu m;
+	if (m.Ve() == 0)
 	{
-		g.Input(); 
-		g.Update(); 
-		g.Render();
+		TheGame g;
+		while (!g.getWindow()->IsDone())
+		{
+			g.Input();
+			g.Update();
+			g.Render();
+		}
+
+
 	}
+
+
+	return 0;
 }
