@@ -71,13 +71,5 @@ void ManHinhChoi::Update()
 		{
 			m_isDone = true; 
 		}
-		if (ev.type == sf::Event::KeyPressed)
-		{
-			if (ev.key.code == sf::Keyboard::F6)
-			{
-				ToggleFullScreen(); 
-			}
-		}
-
-	}
+    }
 }
