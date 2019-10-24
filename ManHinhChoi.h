@@ -12,10 +12,14 @@ private:
 	bool m_isDone;
 	bool m_isFullWindows;
 public:
-	void Setup(std::string title, sf::Vector2f &Wsize);
 	ManHinhChoi();
 	~ManHinhChoi(); 
+	
 	bool IsDone(){ return m_isDone; }
+
+	void Setup(std::string title, sf::Vector2f& Wsize);
+
+
 	void StartDrawing(); // tạo backgroud rỗng
 	void Display(sf::Drawable& object); // vẽ
 	void InLenManHinh(); // in lên (display)

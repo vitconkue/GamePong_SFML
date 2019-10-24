@@ -36,11 +36,6 @@ ManHinhChoi* TheGame::getWindow()
 {
 	return &m_GameScreen;
 }
-
-
-
-
-
 void TheGame::Input()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
