@@ -6,6 +6,8 @@
 #include "Ball.h"
 #include "Paddle.h"
 
+using namespace std;
+
 class TheGame
 {
 private : 

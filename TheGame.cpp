@@ -74,6 +74,48 @@ void TheGame::Render()
 	m_GameScreen.Display(m_ball); 
 	m_GameScreen.Display(player1);
 	m_GameScreen.Display(player2);
+	//In diem
+	sf::Font font;
+	if (!font.loadFromFile("PointFont.ttf"))
+	{
+		cout << "Fails to load Point font!!!";
+	}
+	sf::Text p1;
+	sf::Text p2;
+	p1.setFont(font);
+	p2.setFont(font);
+	p1.setFillColor(sf::Color::White);
+	p2.setFillColor(sf::Color::White);
+	p1.setCharacterSize(75);
+	p2.setCharacterSize(75);
+	p1.setPosition(300, 50);
+	p2.setPosition(700, 50);
+	if (point1 == 0)
+	{
+		p1.setString("0");
+	}
+	if (point1 == 1)
+	{
+		p1.setString("1");
+	}
+	if (point1 == 2)
+	{
+		p1.setString("2");
+	}
+	if (point2 == 0)
+	{
+		p2.setString("0");
+	}
+	if (point2 == 1)
+	{
+		p2.setString("1");
+	}
+	if (point2 == 2)
+	{
+		p2.setString("2");
+	}
+	m_GameScreen.Display(p1);
+	m_GameScreen.Display(p2);
 	m_GameScreen.InLenManHinh(); 
 }
 
