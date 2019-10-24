@@ -1,4 +1,4 @@
-#include "Ball.h"
+﻿#include "Ball.h"
 
 Ball::Ball()
 {
@@ -43,7 +43,8 @@ void Ball::MoveBall(ManHinhChoi* in_window)
 	setPosition(newPos); 
 }
 
-
+//sau khi gõ code xong thấy muốn lưu trạng thái code vừa rồi lại thì mình commit
+// phải commit xong rồi mới push lên được
 
 
 
