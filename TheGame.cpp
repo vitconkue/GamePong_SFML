@@ -65,6 +65,7 @@ void TheGame::Update()
 	checkBallCollusionWithPaddleAndLeftRightWall(); 
 	CheckWinnerAndEndGame();
 	m_ball.MoveBall(&m_GameScreen);
+	//std::cout << "(" << m_ball.getBasicDirect().x << ";" << m_ball.getBasicDirect().x << ")" << std::endl;
 
 }
 void TheGame::Render()
@@ -78,6 +79,7 @@ void TheGame::Render()
 
 void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 {
+	sf::Event ev; 
 	sf::Vector2f ballpos = m_ball.getPosition(); 
 	sf::Vector2f p1pos = player1.getPosition(); 
 	sf::Vector2f p2pos = player2.getPosition(); 
@@ -90,9 +92,25 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 		if (ballpos.y <= p1pos.y + psize.y / 2 &&
 			ballpos.y >= p1pos.y - psize.y / 2)
 		{
-			m_ball.chanBasicDirectX(); 
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
+				&& m_ball.getBasicDirect().y == 1)
+			{
+				m_ball.ReverseBasicDirect();
+			}
+			else
+			{
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)
+					&& m_ball.getBasicDirect().y == -1)
+				{
+					m_ball.ReverseBasicDirect();
+				}
+				else
+				{
+					m_ball.ReverseBasicDirectX(); 
+				}
+			}
 			m_ball.setSpeed(m_ball.getSpeed() * 1.1);
-		}
+        }
 	}
 	// chạm người chơi phải
 	if (ballpos.x + bra >= p2pos.x - psize.x / 2)
@@ -100,20 +118,34 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 		if (ballpos.y <= p2pos.y + psize.y / 2 &&
 			ballpos.y >= p2pos.y - psize.y / 2)
 		{
-			m_ball.chanBasicDirectX(); 
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+				&& m_ball.getBasicDirect().y == 1)
+			{
+				m_ball.ReverseBasicDirect();
+			}
+			else
+			{
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+					&& m_ball.getBasicDirect().y == -1)
+				{
+					m_ball.ReverseBasicDirect();
+				}
+				else
+				{
+					m_ball.ReverseBasicDirectX();
+				}
+			}
 			m_ball.setSpeed(m_ball.getSpeed() * 1.1);
 		}
     }
 	if (ballpos.x < p1pos.x +psize.x/2 )
 	{
 		point2++;
-		std::cout << "Player1 :" << point1 << "  Player2: " << point2 << std::endl; 
 		Reset(); 
 	}
 	if (ballpos.x > p2pos.x -psize.x/2)
 	{
 		point1++; 
-		std::cout << "Player1 :" << point1 << "  Player2: " << point2 << std::endl;
 		Reset(); 
 	}
 
@@ -129,7 +161,7 @@ bool TheGame::CheckWinnerAndEndGame()
 	}
 	if (point2 == 3)
 	{
-		//std::cout << "Player 1 wins" << std::endl;
+		//std::cout << "Player 2 wins" << std::endl;
 		m_ball.setSpeed(0.0f);
 		return true; 
 	}

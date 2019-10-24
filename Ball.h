@@ -14,7 +14,10 @@ public :
 	void setSpeed(float in) { speed = in;  }
 	sf::Vector2f getBasicDirect() { return basicDirect;  }
 	void setBasicDirect(sf::Vector2f in) { basicDirect = in;  }
-	void chanBasicDirectX() { basicDirect.x = -basicDirect.x;  }
+	void ReverseBasicDirectX() { basicDirect.x = -basicDirect.x;  }
+	void ReverseBasicDirectY() { basicDirect.y = -basicDirect.y;  }
+	void deviateUpWardX() { basicDirect.x += 10;  }
+	void deviateDownWard() { basicDirect.x -= 10; }
 	void ReverseBasicDirect() { basicDirect = -basicDirect;  }
 	sf::Vector2f getIncrement() { return basicDirect; }
 	void MoveBall(ManHinhChoi* in_window);

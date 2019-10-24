@@ -21,21 +21,13 @@ void Ball::MoveBall(ManHinhChoi* in_window)
 	wsize.x = in_window->GetWindowSize().x; 
 	wsize.y = in_window->GetWindowSize().y;
 	float bra = getRadius(); 
-	/*if (getPosition().x < 0 && basicDirect.x < 0)
-	{
-		return; 
-	}
-	if (getPosition().x > wsize.x - bra && basicDirect.x > 0)
-	{
-		return; 
-	}*/
 	if (getPosition().y > wsize.y - bra && basicDirect.y > 0)
 	{
-		basicDirect.y = -basicDirect.y;
+		ReverseBasicDirectY(); 
 	}
 	if (getPosition().y < 0 && basicDirect.y < 0)
 	{
-		basicDirect.y = -basicDirect.y;
+		ReverseBasicDirectY(); 
 	}
 	sf::Vector2f newPos; 
 	newPos.x = getPosition().x + speed*basicDirect.x; 
@@ -43,8 +35,7 @@ void Ball::MoveBall(ManHinhChoi* in_window)
 	setPosition(newPos); 
 }
 
-//sau khi gõ code xong thấy muốn lưu trạng thái code vừa rồi lại thì mình commit
-// phải commit xong rồi mới push lên được
+
 
 
 
