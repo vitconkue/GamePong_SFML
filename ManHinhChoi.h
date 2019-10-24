@@ -14,13 +14,9 @@ private:
 public:
 	ManHinhChoi();
 	~ManHinhChoi(); 
-	
-	bool IsDone(){ return m_isDone; }
-
 	void Setup(std::string title, sf::Vector2f& Wsize);
-
-
-	void StartDrawing(); // tạo backgroud rỗng
+	bool IsDone(){ return m_isDone; }
+    void StartDrawing(); // tạo backgroud rỗng
 	void Display(sf::Drawable& object); // vẽ
 	void InLenManHinh(); // in lên (display)
 	void createScreen(); // có xét xem có phải là full màn hình không 
