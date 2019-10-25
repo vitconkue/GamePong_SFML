@@ -5,7 +5,7 @@ Ball::Ball()
    setRadius(10); 
    setFillColor(sf::Color::White);
    setOrigin(this->getRadius(), this->getRadius()); 
-   speed = 5;
+   speed = 3;
    basicDirect = sf::Vector2f(1.0f, 1.0f); 
 }
 

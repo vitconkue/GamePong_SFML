@@ -18,7 +18,7 @@ void TheGame::Reset()
 	m_ball.setPosition(wsize.x / 2, wsize.y / 2);
 	player1.setPosition(20 + player1.getSize().x / 2, wsize.y / 2);
 	player2.setPosition(wsize.x - 20 - player2.getSize().x / 2, wsize.y / 2);
-	m_ball.setSpeed(5.0f);
+	m_ball.setSpeed(3.0f);
 }
 
 void TheGame::ResetAll()

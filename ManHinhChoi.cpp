@@ -15,7 +15,7 @@ ManHinhChoi::ManHinhChoi()
 	sf::Vector2f s; 
 	s.x = 1000; s.y = 600; 
 	Setup("Game Pong", s); 
-	m_windows.setFramerateLimit(40); 
+	m_windows.setFramerateLimit(80); 
 }
 
 ManHinhChoi::~ManHinhChoi()
