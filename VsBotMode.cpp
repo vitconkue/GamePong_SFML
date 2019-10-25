@@ -1,18 +1,18 @@
-﻿#include "TheGame.h"
+﻿#include "VsBotMode.h"
 
-TheGame::TheGame() : m_GameScreen(), m_ball(),player1(), player2()
+VsBotMode::VsBotMode() : m_GameScreen(), m_ball(), player1(), player2()
 {
-	sf::Vector2f wsize = m_GameScreen.GetWindowSize(); 
-	m_ball.setPosition(wsize.x / 2,wsize.y / 2);
-	player1.setPosition( 20+player1.getSize().x / 2, wsize.y / 2); 
+	sf::Vector2f wsize = m_GameScreen.GetWindowSize();
+	m_ball.setPosition(wsize.x / 2, wsize.y / 2);
+	player1.setPosition(20 + player1.getSize().x / 2, wsize.y / 2);
 	player2.setFillColor(sf::Color::Red);
 	player2.setPosition(wsize.x - 20 - player2.getSize().x / 2, wsize.y / 2);
-	point1 = point2 = 0; 
+	point1 = point2 = 0;
 }
 
 
 
-void TheGame::Reset()
+void VsBotMode::Reset()
 {
 	sf::Vector2f wsize = m_GameScreen.GetWindowSize();
 	m_ball.setPosition(wsize.x / 2, wsize.y / 2);
@@ -21,60 +21,78 @@ void TheGame::Reset()
 	m_ball.setSpeed(3.0f);
 }
 
-void TheGame::ResetAll()
+void VsBotMode::ResetAll()
 {
 	sf::Vector2f wsize = m_GameScreen.GetWindowSize();
 	m_ball.setPosition(wsize.x / 2, wsize.y / 2);
 	player1.setPosition(20 + player1.getSize().x / 2, wsize.y / 2);
 	player2.setPosition(wsize.x - 20 - player2.getSize().x / 2, wsize.y / 2);
 	m_ball.setSpeed(0.0f);
-	point1 = 0;  
-	point2 = 0; 
+	point1 = 0;
+	point2 = 0;
 }
 
-ManHinhChoi* TheGame::getWindow()
+ManHinhChoi* VsBotMode::getWindow()
 {
 	return &m_GameScreen;
 }
-void TheGame::Input()
+void VsBotMode::Input()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		player2.MoveUp(&m_GameScreen); 
+		player2.MoveUp(&m_GameScreen);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
 		player2.MoveDown(&m_GameScreen);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
 		player1.MoveUp(&m_GameScreen);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
 		player1.MoveDown(&m_GameScreen);
-	}
+	}*/
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		Reset(); 
+		Reset();
 	}
 }
-void TheGame::Update()
+void VsBotMode::Update()
 {
-	m_GameScreen.Update(); 
-	checkBallCollusionWithPaddleAndLeftRightWall(); 
+	m_GameScreen.Update();
+	checkBallCollusionWithPaddleAndLeftRightWall();
+	//Dự đoán đường đi tiếp theo cho Bot.
 	m_ball.MoveBall(&m_GameScreen);
+	level = 3;
+	sf::Vector2f ballpos = m_ball.getPosition();
+	sf::Vector2f newbotposition;
+	sf::Vector2f botpos = player1.getPosition();
+	newbotposition.x = player1.getPosition().x;
+	if (ballpos.y > 90 && ballpos.y < 510)
+	{
+		if (botpos.y < ballpos.y)
+		{
+			newbotposition.y = botpos.y + 5;
+			player1.setPosition(newbotposition);
+		}
+		else if (botpos.y > ballpos.y)
+		{
+			newbotposition.y = botpos.y - 5;
+			player1.setPosition(newbotposition);
+		}
+	}
+
 	//std::cout << "(" << m_ball.getBasicDirect().x << ";" << m_ball.getBasicDirect().x << ")" << std::endl;
 
 }
-void TheGame::Render()
+void VsBotMode::Render()
 {
-	m_GameScreen.StartDrawing(); 
-	m_GameScreen.Display(spr);
+	m_GameScreen.StartDrawing();
 	m_GameScreen.Display(m_ball);
 	m_GameScreen.Display(player1);
 	m_GameScreen.Display(player2);
-
 	//In diem
 	sf::Font font;
 	if (!font.loadFromFile("PointFont.ttf"))
@@ -117,18 +135,18 @@ void TheGame::Render()
 	}
 	m_GameScreen.Display(p1);
 	m_GameScreen.Display(p2);
-	m_GameScreen.InLenManHinh(); 
+	m_GameScreen.InLenManHinh();
 }
 
-void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
+void VsBotMode::checkBallCollusionWithPaddleAndLeftRightWall()
 {
-	sf::Event ev; 
-	sf::Vector2f ballpos = m_ball.getPosition(); 
-	sf::Vector2f p1pos = player1.getPosition(); 
-	sf::Vector2f p2pos = player2.getPosition(); 
+	sf::Event ev;
+	sf::Vector2f ballpos = m_ball.getPosition();
+	sf::Vector2f p1pos = player1.getPosition();
+	sf::Vector2f p2pos = player2.getPosition();
 	sf::Vector2f psize = player1.getSize();
-	sf::Vector2f wsize = m_GameScreen.GetWindowSize(); 
-	float bra = m_ball.getRadius(); 
+	sf::Vector2f wsize = m_GameScreen.GetWindowSize();
+	float bra = m_ball.getRadius();
 	// chạm người chơi trái
 	if (ballpos.x - bra <= p1pos.x + psize.x / 2)
 	{
@@ -149,11 +167,11 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 				}
 				else
 				{
-					m_ball.ReverseBasicDirectX(); 
+					m_ball.ReverseBasicDirectX();
 				}
 			}
 			m_ball.setSpeed(m_ball.getSpeed() * 1.1);
-        }
+		}
 	}
 	// chạm người chơi phải
 	if (ballpos.x + bra >= p2pos.x - psize.x / 2)
@@ -180,26 +198,26 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 			}
 			m_ball.setSpeed(m_ball.getSpeed() * 1.1);
 		}
-    }
-	if (ballpos.x < p1pos.x +psize.x/2 )
+	}
+	if (ballpos.x < p1pos.x + psize.x / 2)
 	{
 		point2++;
-		Reset(); 
+		Reset();
 	}
-	if (ballpos.x > p2pos.x -psize.x/2)
+	if (ballpos.x > p2pos.x - psize.x / 2)
 	{
-		point1++; 
-		Reset(); 
+		point1++;
+		Reset();
 	}
 
 }
 
-int TheGame::CheckWinnerAndEndGame()
+int VsBotMode::CheckWinnerAndEndGame()
 {
 	if (point1 == 3)
 	{
 		//std::cout << "Player 1 wins" << std::endl;
-		m_ball.setSpeed(0.0f);  
+		m_ball.setSpeed(0.0f);
 		return 1;
 	}
 	if (point2 == 3)

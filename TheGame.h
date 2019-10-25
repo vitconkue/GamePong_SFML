@@ -2,6 +2,7 @@
 
 #include "ManHinhChoi.h"
 #include <SFML/Graphics.hpp>
+#include<SFML/Audio.hpp>
 #include <iostream>
 #include "Ball.h"
 #include "Paddle.h"
@@ -17,6 +18,7 @@ private :
 	ManHinhChoi m_GameScreen; 
 	int point1; 
 	int point2;
+	sf::Sprite spr;
 public : 
 	TheGame();
 	~TheGame() {}; 
@@ -27,6 +29,6 @@ public :
 	void Update();
 	void Render(); 
 	void checkBallCollusionWithPaddleAndLeftRightWall(); 
-	bool CheckWinnerAndEndGame(); 
+	int CheckWinnerAndEndGame(); 
 };
 

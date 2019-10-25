@@ -16,6 +16,8 @@ public:
 	void Xuong();
 	void TapToContinued(sf::RenderWindow& window);
 	int MainMenu(sf::RenderWindow& window);
+	int EndGame_2PL(int kq);
+	int EndGame_1PL(int kq);
 	Menu();
 	~Menu();
 };
