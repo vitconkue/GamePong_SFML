@@ -8,7 +8,7 @@ TheGame::TheGame() : m_GameScreen(), m_ball(),player1(), player2()
 	player2.setFillColor(sf::Color::Red);
 	player2.setPosition(wsize.x - 20 - player2.getSize().x / 2, wsize.y / 2);
 	point1 = point2 = 0; 
-	if (!tex.loadFromFile("InGameBackground.png"))
+	if (!texture.loadFromFile("InGameBackground.png"))
 	{
 		cout << "Load fails";
 	}
@@ -90,7 +90,7 @@ void TheGame::Update()
 void TheGame::Render()
 {
 	m_GameScreen.StartDrawing(); 
-	sf::Sprite sprite(tex);
+	sf::Sprite sprite(texture);
 	m_GameScreen.Display(sprite);
 	m_GameScreen.Display(m_ball);
 	m_GameScreen.Display(player1);

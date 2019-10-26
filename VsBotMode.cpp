@@ -1,6 +1,6 @@
 ﻿#include "VsBotMode.h"
 
-VsBotMode::VsBotMode() : m_GameScreen(), m_ball(), bot(), player(), tex(), buf(), scorebuf(), winbuf()
+VsBotMode::VsBotMode() : m_GameScreen(), m_ball(), bot(), player(), texture(), buf(), scorebuf(), winbuf()
 {
 	sf::Vector2f wsize = m_GameScreen.GetWindowSize();
 	m_ball.setPosition(wsize.x / 2, wsize.y / 2);
@@ -8,7 +8,7 @@ VsBotMode::VsBotMode() : m_GameScreen(), m_ball(), bot(), player(), tex(), buf()
 	player.setFillColor(sf::Color::Red);
 	player.setPosition(wsize.x - 20 - player.getSize().x / 2, wsize.y / 2);
 	point1 = point2 = 0;
-	if (!tex.loadFromFile("InGameBackground.png"))
+	if (!texture.loadFromFile("InGameBackground.png"))
 	{
 		cout << "Load fails";
 	}
@@ -100,7 +100,7 @@ void VsBotMode::Update()
 void VsBotMode::Render()
 {
 	m_GameScreen.StartDrawing();
-	sf::Sprite sprite(tex);
+	sf::Sprite sprite(texture);
 	m_GameScreen.Display(sprite);
 	m_GameScreen.Display(m_ball);
 	m_GameScreen.Display(bot);

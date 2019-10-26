@@ -19,7 +19,7 @@ private :
 	ManHinhChoi m_GameScreen; 
 	int point1; 
 	int point2;
-	sf::Texture tex;
+	sf::Texture texture;
 	sf::SoundBuffer buf;
 	sf::SoundBuffer mainbuf;
 	sf::SoundBuffer scorebuf;

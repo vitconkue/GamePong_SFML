@@ -20,7 +20,7 @@ private:
 	int point1;
 	int point2;
 	int level;
-	sf::Texture tex;
+	sf::Texture texture;
 	sf::SoundBuffer buf;
 	sf::SoundBuffer mainbuf;
 	sf::SoundBuffer scorebuf;
