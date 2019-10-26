@@ -36,7 +36,7 @@ int main()
 	}
 	else if (choose == 1)
 	{
-		oneplayer:
+	oneplayer:
 		VsBotMode g;
 		while (!g.getWindow()->IsDone())
 		{

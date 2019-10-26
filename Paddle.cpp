@@ -13,10 +13,10 @@ Paddle::Paddle()
 
 void Paddle::MoveUp(ManHinhChoi* in_window)
 {
-	sf::Vector2f step(0.0, -30.0); 
+	sf::Vector2f step(0.0, -10.0); 
 	sf::Vector2f pos = getPosition(); 
 	sf::Vector2f wsize = in_window->GetWindowSize(); 
-	if (pos.y - getSize().y/2>= 30.f)
+	if (pos.y - getSize().y/2>= 10.f)
 	{
 		sf::Vector2f newPos = pos + step;
 		setPosition(newPos);
@@ -27,10 +27,10 @@ void Paddle::MoveUp(ManHinhChoi* in_window)
 
 void Paddle::MoveDown(ManHinhChoi* in_window)
 {
-	sf::Vector2f step(0.0, 30.0);
+	sf::Vector2f step(0.0, 10.0);
 	sf::Vector2f pos = getPosition();
 	sf::Vector2f wsize = in_window->GetWindowSize();
-	if (pos.y + getSize().y / 2 < wsize.y - 30.f)
+	if (pos.y + getSize().y / 2 < wsize.y - 10.f)
 	{
 		sf::Vector2f newPos = pos + step; 
 		setPosition(newPos); 

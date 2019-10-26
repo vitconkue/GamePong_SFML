@@ -8,7 +8,5 @@ public :
 	Paddle(); 
 	void MoveUp(ManHinhChoi* in_window); 
 	void MoveDown(ManHinhChoi* in_window);
-	void BotMoveUp(ManHinhChoi* in_window);
-	void BotMoveDown(ManHinhChoi* in_window);
 };
 

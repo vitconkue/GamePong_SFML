@@ -37,6 +37,7 @@ void Menu::TapToContinued(sf::RenderWindow& window)
 
 int Menu::MainMenu(sf::RenderWindow& window)
 {
+	LuaChon = 0;
 	//Load file am thanh va hieu ung am thanh
 	sf::SoundBuffer buffer1;
 	sf::SoundBuffer buffer2;
@@ -144,12 +145,7 @@ int Menu::MainMenu(sf::RenderWindow& window)
 		}
 
 		window.clear();
-		sf::Texture texture;
-		if (!texture.loadFromFile("MainMenu.png"))
-		{
-			cout << "Fails to load texture file!!!";
-		}
-		sf::Sprite sprite(texture);
+		sf::Sprite sprite(tex);
 		window.draw(sprite);
 
 		for (int i = 0; i < 3; i++)
@@ -441,6 +437,10 @@ int Menu::EndGame_1PL(int kq)
 Menu::Menu()
 {
 	LuaChon = 0;
+	if (!tex.loadFromFile("MainMenu.png"))
+	{
+		cout<<"Load fails";
+	}
 }
 Menu::~Menu()
 {

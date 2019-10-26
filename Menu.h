@@ -10,6 +10,7 @@ private:
 	int LuaChon;
 	sf::Text menu[3];
 	sf::Font font;
+	sf::Texture tex;
 public:
 	int Ve();
 	void Len();
