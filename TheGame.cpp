@@ -84,8 +84,6 @@ void TheGame::Update()
 	m_GameScreen.Update(); 
 	checkBallCollusionWithPaddleAndLeftRightWall(); 
 	m_ball.MoveBall(&m_GameScreen);
-	//std::cout << "(" << m_ball.getBasicDirect().x << ";" << m_ball.getBasicDirect().x << ")" << std::endl;
-
 }
 void TheGame::Render()
 {
@@ -184,10 +182,10 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 	sf::Vector2f wsize = m_GameScreen.GetWindowSize(); 
 	float bra = m_ball.getRadius(); 
 	// chạm người chơi trái
-	if (ballpos.x - bra <= p1pos.x + psize.x / 2)
+	if (ballpos.x - bra <= p1pos.x + psize.x / 2 && m_ball.getBasicDirect().x ==-1)
 	{
-		if (ballpos.y <= p1pos.y + psize.y / 2 &&
-			ballpos.y >= p1pos.y - psize.y / 2)
+		if (ballpos.y <= p1pos.y + psize.y / 2 +20 &&
+			ballpos.y >= p1pos.y - psize.y / 2-20 )
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
 				&& m_ball.getBasicDirect().y == 1)
@@ -215,10 +213,10 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 
 	}
 	// chạm người chơi phải
-	if (ballpos.x + bra >= p2pos.x - psize.x / 2)
+	if (ballpos.x + bra >= p2pos.x - psize.x / 2&& m_ball.getBasicDirect().x == 1)
 	{
-		if (ballpos.y <= p2pos.y + psize.y / 2 &&
-			ballpos.y >= p2pos.y - psize.y / 2)
+		if (ballpos.y <= p2pos.y + psize.y / 2+20 &&
+			ballpos.y >= p2pos.y - psize.y / 2-20)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
 				&& m_ball.getBasicDirect().y == 1)
