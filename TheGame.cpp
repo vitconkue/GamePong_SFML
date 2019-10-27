@@ -16,7 +16,7 @@ TheGame::TheGame() : m_GameScreen(), m_ball(),player1(), player2()
 	{
 		cout << "Load fails";
 	}
-	if (!mainbuf.loadFromFile("MenuMusic.ogg"))
+	if (!mainbuf.loadFromFile("2PLInGameMusic.ogg"))
 	{
 		cout << "Load fails";
 	}
@@ -47,7 +47,7 @@ void TheGame::ResetAll()
 	m_ball.setPosition(wsize.x / 2, wsize.y / 2);
 	player1.setPosition(20 + player1.getSize().x / 2, wsize.y / 2);
 	player2.setPosition(wsize.x - 20 - player2.getSize().x / 2, wsize.y / 2);
-	m_ball.setSpeed(0.0f);
+	m_ball.setSpeed(3.0f);
 	point1 = 0;  
 	point2 = 0; 
 }
@@ -56,7 +56,7 @@ ManHinhChoi* TheGame::getWindow()
 {
 	return &m_GameScreen;
 }
-void TheGame::Input()
+int TheGame::Input()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
@@ -78,6 +78,29 @@ void TheGame::Input()
 	{
 		Reset(); 
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		//Tam dung am thanh khi mo menu
+		mainsound.pause();
+		Menu m;
+		int chon = m.Pause();
+		if (chon == 1)
+		{
+			mainsound.play();
+		}
+		if (chon == 2)
+		{
+			//Cho phat nhac lai tu dau
+			mainsound.stop();
+			mainsound.play();
+			ResetAll();
+		}
+		if (chon == 3)
+		{
+			return 1;
+		}
+	}
+	return 0;
 }
 void TheGame::Update()
 {
@@ -111,33 +134,11 @@ void TheGame::Render()
 	p2.setCharacterSize(75);
 	p1.setPosition(300, 50);
 	p2.setPosition(700, 50);
-	if (point1 == 0)
-	{
-		p1.setString("0");
-	}
-	if (point1 == 1)
-	{
-		p1.setString("1");
-	}
-	if (point1 == 2)
-	{
-		p1.setString("2");
-	}
-	if (point2 == 0)
-	{
-		p2.setString("0");
-	}
-	if (point2 == 1)
-	{
-		p2.setString("1");
-	}
-	if (point2 == 2)
-	{
-		p2.setString("2");
-	}
+	p1.setString(toString(point1));
+	p2.setString(toString(point2));
 	if (point1 == 3)
 	{
-		p1.setString("3");
+		p1.setString(toString(point1));
 		winner.setFont(font);
 		winner.setFillColor(sf::Color::Blue);
 		winner.setOutlineThickness(3);
@@ -149,7 +150,7 @@ void TheGame::Render()
 	}
 	if (point2 == 3)
 	{
-		p2.setString("3");
+		p2.setString(toString(point2));
 		winner.setFont(font);
 		winner.setFillColor(sf::Color::Red);
 		winner.setOutlineThickness(3);
@@ -164,6 +165,8 @@ void TheGame::Render()
 	m_GameScreen.InLenManHinh();
 	if (point1 == 3 || point2 == 3)
 	{
+		//Dung nhac nen, phat nhac win
+		mainsound.stop();
 		sf::Sound s;
 		s.setBuffer(winbuf);
 		s.play();
@@ -279,4 +282,28 @@ int TheGame::CheckWinnerAndEndGame()
 		return 2;
 	}
 	return 0;
+}
+void TheGame::PlayMainMusic()
+{
+	mainsound.setBuffer(mainbuf);
+	mainsound.play();
+}
+
+string TheGame::toString(int a)
+{
+	string str = "";
+	if (a == 0)
+	{
+		str = "0";
+	}
+	while (a != 0)
+	{
+		str += char(a % 10 + 48);
+		a /= 10;
+	}
+	for (int i = 0; i < str.length() / 2; i++)
+	{
+		swap(str[i], str[str.length() - i - 1]);
+	}
+	return str;
 }

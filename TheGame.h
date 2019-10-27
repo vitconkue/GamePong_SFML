@@ -7,6 +7,7 @@
 #include<windows.h>
 #include "Ball.h"
 #include "Paddle.h"
+#include"Menu.h"
 
 using namespace std;
 
@@ -24,16 +25,20 @@ private :
 	sf::SoundBuffer mainbuf;
 	sf::SoundBuffer scorebuf;
 	sf::SoundBuffer winbuf;
+	sf::Sound mainsound;
 public : 
+
 	TheGame();
 	~TheGame() {}; 
 	void Reset(); 
 	void ResetAll(); 
 	ManHinhChoi* getWindow();
-	void Input(); 
+	int Input(); 
 	void Update();
 	void Render(); 
 	void checkBallCollusionWithPaddleAndLeftRightWall(); 
 	int CheckWinnerAndEndGame(); 
+	string toString(int);
+	void PlayMainMusic();
 };
 

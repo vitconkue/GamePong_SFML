@@ -19,6 +19,7 @@ public:
 	int MainMenu(sf::RenderWindow& window);
 	int EndGame_2PL(int kq);
 	int EndGame_1PL(int kq);
+	int Pause();
 	Menu();
 	~Menu();
 };

@@ -7,7 +7,6 @@
 
 int main()
 {
-
 	Menu m;
 	mainmenu:
 	int choose = m.Ve();
@@ -15,9 +14,14 @@ int main()
 	{
 		twoplayer:
 		TheGame g;
+		g.PlayMainMusic();
+		
 		while (!g.getWindow()->IsDone())
 		{
-			g.Input();
+			if (g.Input() == 1)
+			{
+				goto mainmenu;
+			}
 			g.Update();
 			g.Render();
 			int kq = g.CheckWinnerAndEndGame();
@@ -38,9 +42,13 @@ int main()
 	{
 	oneplayer:
 		VsBotMode g;
+		g.PlayMainMusic();
 		while (!g.getWindow()->IsDone())
 		{
-			g.Input();
+			if (g.Input() == 1)
+			{
+				goto mainmenu;
+			}
 			g.Update();
 			g.Render();
 			int kq = g.CheckWinnerAndEndGame();

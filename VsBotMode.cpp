@@ -16,7 +16,7 @@ VsBotMode::VsBotMode() : m_GameScreen(), m_ball(), bot(), player(), texture(), b
 	{
 		cout << "Load fails";
 	}
-	if (!mainbuf.loadFromFile("MenuMusic.ogg"))
+	if (!mainbuf.loadFromFile("1PLInGameMusic.ogg"))
 	{
 		cout << "Load fails";
 	}
@@ -28,15 +28,8 @@ VsBotMode::VsBotMode() : m_GameScreen(), m_ball(), bot(), player(), texture(), b
 	{
 		cout << "Load fails";
 	}
-	PlayMainMusic();
 }
 
-void VsBotMode::PlayMainMusic()
-{
-	sf::Sound s;
-	s.setBuffer(mainbuf);
-	s.play();
-}
 
 
 void VsBotMode::Reset()
@@ -55,7 +48,7 @@ void VsBotMode::ResetAll()
 	m_ball.setPosition(wsize.x / 2, wsize.y / 2);
 	bot.setPosition(20 + bot.getSize().x / 2, wsize.y / 2);
 	player.setPosition(wsize.x - 20 - player.getSize().x / 2, wsize.y / 2);
-	m_ball.setSpeed(0.0f);
+	m_ball.setSpeed(3.0f);
 	point1 = 0;
 	point2 = 0;
 }
@@ -64,7 +57,7 @@ ManHinhChoi* VsBotMode::getWindow()
 {
 	return &m_GameScreen;
 }
-void VsBotMode::Input()
+int VsBotMode::Input()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
@@ -86,6 +79,29 @@ void VsBotMode::Input()
 	{
 		Reset();
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		//Tam dung am thanh khi mo menu
+		mainsound.pause();
+		Menu m;
+		int chon = m.Pause();
+		if (chon == 1)
+		{
+			mainsound.play();
+		}
+		if (chon == 2)
+		{
+			//Cho phat nhac lai tu dau
+			mainsound.stop();
+			mainsound.play();
+			ResetAll();
+		}
+		if (chon == 3)
+		{
+			return 1;
+		}
+	}
+	return 0;
 }
 void VsBotMode::Update()
 {
@@ -119,33 +135,11 @@ void VsBotMode::Render()
 	p2.setCharacterSize(75);
 	p1.setPosition(300, 50);
 	p2.setPosition(700, 50);
-	if (point1 == 0)
-	{
-		p1.setString("0");
-	}
-	if (point1 == 1)
-	{
-		p1.setString("1");
-	}
-	if (point1 == 2)
-	{
-		p1.setString("2");
-	}
-	if (point2 == 0)
-	{
-		p2.setString("0");
-	}
-	if (point2 == 1)
-	{
-		p2.setString("1");
-	}
-	if (point2 == 2)
-	{
-		p2.setString("2");
-	}
+	p1.setString(toString(point1));
+	p2.setString(toString(point2));
 	if (point1 == 3)
 	{
-		p1.setString("3");
+		p1.setString(toString(point1));
 		winner.setFont(font);
 		winner.setFillColor(sf::Color::Blue);
 		winner.setOutlineThickness(3);
@@ -157,7 +151,7 @@ void VsBotMode::Render()
 	}
 	if (point2 == 3)
 	{
-		p2.setString("3");
+		p2.setString(toString(point2));
 		winner.setFont(font);
 		winner.setFillColor(sf::Color::Red);
 		winner.setOutlineThickness(3);
@@ -172,6 +166,8 @@ void VsBotMode::Render()
 	m_GameScreen.InLenManHinh();
 	if (point1 == 3 || point2 == 3)
 	{
+		//Dung nhac nen, phat nhac win
+		mainsound.stop();
 		sf::Sound s;
 		s.setBuffer(winbuf);
 		s.play();
@@ -302,6 +298,12 @@ void VsBotMode::BotMove()
 	//}
 
 }
+void VsBotMode::PlayMainMusic()
+{
+	mainsound.setBuffer(mainbuf);
+	mainsound.play();
+
+}
 
 int VsBotMode::CheckWinnerAndEndGame()
 {
@@ -318,4 +320,23 @@ int VsBotMode::CheckWinnerAndEndGame()
 		return 2;
 	}
 	return 0;
+}
+
+string VsBotMode::toString(int a)
+{
+	string str = "";
+	if (a == 0)
+	{
+		str = "0";
+	}
+	while (a != 0)
+	{
+		str += char(a % 10 + 48);
+		a /= 10;
+	}
+	for (int i = 0; i < str.length() / 2; i++)
+	{
+		swap(str[i], str[str.length() - i - 1]);
+	}
+	return str;
 }

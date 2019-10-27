@@ -434,6 +434,122 @@ int Menu::EndGame_1PL(int kq)
 	}
 	return 0;
 }
+
+int Menu::Pause()
+{
+	sf::RenderWindow window(sf::VideoMode(600, 400), "GAME FINISHED");
+	//Set up cac doi tuong in len man hinh
+	sf::Text a[4];
+	sf::Font font;
+	if (!font.loadFromFile("pointfont.ttf"))
+	{
+		cout << "Fails to load font file";
+	}
+	a[0].setFillColor(sf::Color::White);
+	a[0].setFont(font);
+	a[0].setPosition(200, 50);
+	a[0].setString("PAUSE");
+	a[1].setFillColor(sf::Color::Cyan);
+	a[1].setFont(font);
+	a[1].setPosition(200, 150);
+	a[1].setString("CONTINUED");
+	a[2].setFillColor(sf::Color::White);
+	a[2].setFont(font);
+	a[2].setPosition(200, 250);
+	a[2].setString("RESTART");
+	a[3].setFillColor(sf::Color::White);
+	a[3].setFont(font);
+	a[3].setPosition(200, 300);
+	a[3].setString("MAIN MENU");
+	//Thuc thi menu
+	int lc = 1;
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case sf::Event::KeyReleased:
+				switch (event.key.code)
+				{
+				case sf::Keyboard::Up:
+				{
+					//Truong hop nguoi choi nhan Up
+					if (lc > 1)
+					{
+						a[lc].setFillColor(sf::Color::White);
+						lc--;
+						a[lc].setFillColor(sf::Color::Cyan);
+					}
+					else
+					{
+						a[lc].setFillColor(sf::Color::White);
+						lc = 3;
+						a[lc].setFillColor(sf::Color::Cyan);
+					}
+					break;
+				}
+				case sf::Keyboard::Down:
+				{
+					//Truong hop nguoi choi nhan Down
+					if (lc < 3)
+					{
+						a[lc].setFillColor(sf::Color::White);
+						lc++;
+						a[lc].setFillColor(sf::Color::Cyan);
+					}
+					else
+					{
+						a[lc].setFillColor(sf::Color::White);
+						lc = 1;
+						a[lc].setFillColor(sf::Color::Cyan);
+					}
+					break;
+				}
+				case sf::Keyboard::Return:
+				{
+					switch (lc)
+					{
+					case 1:
+					{
+						return 1;
+					}
+					case 2:
+					{
+						return 2;
+					}
+					case 3:
+					{
+						return 3;
+					}
+					}
+
+					break;
+				}
+				}
+
+				break;
+			case sf::Event::Closed:
+
+				window.close();
+
+				break;
+
+			}
+		}
+
+		window.clear();
+
+		for (int i = 0; i < 4; i++)
+		{
+			window.draw(a[i]);
+		}
+
+		window.display();
+	}
+	return 0;
+}
 Menu::Menu()
 {
 	LuaChon = 0;
