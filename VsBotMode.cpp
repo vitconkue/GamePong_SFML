@@ -59,11 +59,12 @@ ManHinhChoi* VsBotMode::getWindow()
 }
 int VsBotMode::Input()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)|| sf::Joystick::isButtonPressed(0, 3))
 	{
 		player.MoveUp(&m_GameScreen);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)||sf::Joystick::isButtonPressed(0, 0))
 	{
 		player.MoveDown(&m_GameScreen);
 	}

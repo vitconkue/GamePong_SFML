@@ -7,6 +7,8 @@
 
 int main()
 {
+
+	
 	Menu m;
 	mainmenu:
 	int choose = m.Ve();

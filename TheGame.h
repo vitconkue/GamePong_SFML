@@ -7,6 +7,7 @@
 #include<windows.h>
 #include "Ball.h"
 #include "Paddle.h"
+#include"Menu.h"
 
 using namespace std;
 
@@ -24,6 +25,7 @@ private :
 	sf::SoundBuffer mainbuf;
 	sf::SoundBuffer scorebuf;
 	sf::SoundBuffer winbuf;
+	sf::Sound mainsound;
 public : 
 	// constructor cho game
 	TheGame();
@@ -36,7 +38,7 @@ public :
 	// getter màn hình
 	ManHinhChoi* getWindow();
 	// xử lí nhập bàn phím
-	void Input(); 
+	int Input(); 
 	// xử lí thành phần game
 	void Update();
 	// vẽ lên màn hình
@@ -44,6 +46,8 @@ public :
 	// bóng chạm thanh và tường 
 	void checkBallCollusionWithPaddleAndLeftRightWall(); 
 	// kiếm tra người thắng, kết thúc game
-	int CheckWinnerAndEndGame(); 
+	int CheckWinnerAndEndGame();
+	string toString(int);
+	void PlayMainMusic();
 };
 
