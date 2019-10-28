@@ -40,6 +40,7 @@ void TheGame::Reset()
 	player1.setPosition(20 + player1.getSize().x / 2, wsize.y / 2);
 	player2.setPosition(wsize.x - 20 - player2.getSize().x / 2, wsize.y / 2);
 	m_ball.setSpeed(3.0f);
+	m_ball.setBasicDirect(sf::Vector2f(1.0, 1.0)); 
 }
 
 void TheGame::ResetAll()
@@ -192,29 +193,18 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 	sf::Vector2f wsize = m_GameScreen.GetWindowSize(); 
 	float bra = m_ball.getRadius(); 
 	// chạm người chơi trái
-	if (ballpos.x - bra <= p1pos.x + psize.x / 2 && m_ball.getBasicDirect().x ==-1) // nếu xét x đã chạm
+	if (ballpos.x - bra <= p1pos.x + psize.x / 2  && m_ball.getBasicDirect().x <0) // nếu xét x đã chạm
 	{
 		if (ballpos.y <= p1pos.y + psize.y / 2 +20 &&
 			ballpos.y >= p1pos.y - psize.y / 2-20 ) // nếu xét y đã chạm
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) 
-				&& m_ball.getBasicDirect().y == 1)// trường hợp người chơi đang cho thanh đi lên => bóng cũng đi lên
-			{
-				m_ball.ReverseBasicDirect();
-			}
-			else
-			{
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)
-					&& m_ball.getBasicDirect().y == -1) // trường hợp người chơi đang cho thanh đi xuống => bóng cũng đi xuống
-				{
-					m_ball.ReverseBasicDirect();
-				}
-				else
-				{
-					m_ball.ReverseBasicDirectX(); 
-				}
-			}
-			m_ball.setSpeed(m_ball.getSpeed() * 1.1); // tăng tốc độ 10%
+			float temp = ballpos.y - p1pos.y; 
+			bool test = temp >= 0;  
+			sf::Vector2f newDirect;   
+			newDirect.y = (m_ball.getBasicDirect().y * (temp / (psize.y / 2 +20)) * 1.5); 
+			newDirect.x = -m_ball.getBasicDirect().x; 
+			m_ball.setBasicDirect(newDirect); 
+            m_ball.setSpeed(m_ball.getSpeed() * 1.1); // tăng tốc độ 10%
 			sf::Sound sound;
 			sound.setBuffer(buf);
 			sound.play();
@@ -223,20 +213,20 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 
 	}
 	// chạm người chơi phải
-	if (ballpos.x + bra >= p2pos.x - psize.x / 2&& m_ball.getBasicDirect().x == 1) // nếu xét x đã chạm
+	if (ballpos.x + bra >= p2pos.x - psize.x / 2 &&m_ball.getPosition().x > 0 ) // n?u xét x dã ch?m
 	{
-		if (ballpos.y <= p2pos.y + psize.y / 2+20 &&
-			ballpos.y >= p2pos.y - psize.y / 2-20)
+		if (ballpos.y <= p2pos.y + psize.y / 2 + 20 &&
+			ballpos.y >= p2pos.y - psize.y / 2 - 20)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
-				&& m_ball.getBasicDirect().y == 1) // trường hợp người chơi đang cho thanh đi lên => bóng cũng đi lên
+				&& m_ball.getBasicDirect().y == 1) // tru?ng h?p ngu?i choi dang cho thanh di lên => bóng cung di lên
 			{
 				m_ball.ReverseBasicDirect();
 			}
 			else
 			{
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
-					&& m_ball.getBasicDirect().y == -1) // trường hợp người chơi đang cho thanh đi xuống => bóng cũng đi xuống
+					&& m_ball.getBasicDirect().y == -1) // tru?ng h?p ngu?i choi dang cho thanh di xu?ng => bóng cung di xu?ng
 				{
 					m_ball.ReverseBasicDirect();
 				}
@@ -252,7 +242,9 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 			m_ball.setSpeed(m_ball.getSpeed() * 1.1);
 		}
 
-    }
+	}
+
+
 	if (ballpos.x < p1pos.x +psize.x/2 )
 	{
 		sf::Sound sound;
