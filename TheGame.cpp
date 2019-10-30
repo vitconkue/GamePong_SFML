@@ -40,7 +40,7 @@ void TheGame::Reset()
 	player1.setPosition(20 + player1.getSize().x / 2, wsize.y / 2);
 	player2.setPosition(wsize.x - 20 - player2.getSize().x / 2, wsize.y / 2);
 	m_ball.setSpeed(3.0f);
-	m_ball.setBasicDirect(sf::Vector2f(1.0, 1.0)); 
+	m_ball.setBasicDirect(sf::Vector2f(1.0f, 1.0f)); 
 }
 
 void TheGame::ResetAll()
@@ -53,6 +53,7 @@ void TheGame::ResetAll()
 	m_ball.setSpeed(3.0f);
 	point1 = 0;  
 	point2 = 0; 
+	m_ball.setBasicDirect(sf::Vector2f(1.0f, 1.0f));
 }
 
 ManHinhChoi* TheGame::getWindow()
@@ -143,7 +144,7 @@ void TheGame::Render()
 	p2.setPosition(700, 50);
 	p1.setString(toString(point1));
 	p2.setString(toString(point2));
-	if (point1 == 3)
+	if (point1 == winscore)
 	{
 		p1.setString(toString(point1));
 		winner.setFont(font);
@@ -155,7 +156,7 @@ void TheGame::Render()
 		winner.setString("PLAYER 1 WIN");
 		m_GameScreen.Display(winner);
 	}
-	if (point2 == 3)
+	if (point2 == winscore)
 	{
 		p2.setString(toString(point2));
 		winner.setFont(font);
@@ -170,14 +171,14 @@ void TheGame::Render()
 	m_GameScreen.Display(p1);
 	m_GameScreen.Display(p2);
 	m_GameScreen.InLenManHinh();
-	if (point1 == 3 || point2 == 3)
+	if (point1 == winscore || point2 == winscore)
 	{
 		//Dung nhac nen, phat nhac win
 		mainsound.stop();
 		sf::Sound s;
 		s.setBuffer(winbuf);
 		s.play();
-		Sleep(5000);
+		Sleep(3000);
 	}
 
 }
@@ -255,12 +256,12 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 
 int TheGame::CheckWinnerAndEndGame()
 {
-	if (point1 == 3)
+	if (point1 == winscore)
 	{
 		m_ball.setSpeed(0.0f);  
 		return 1;
 	}
-	if (point2 == 3)
+	if (point2 == winscore)
 	{
 		m_ball.setSpeed(0.0f);
 		return 2;
@@ -291,4 +292,8 @@ string TheGame::toString(int a)
 		swap(str[i], str[str.length() - i - 1]);
 	}
 	return str;
+}
+void TheGame::setWinscore(int a)
+{
+	winscore = a;
 }
