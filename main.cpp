@@ -7,15 +7,14 @@
 
 int main()
 {
-
-	
+mainmenu:
 	Menu m;
-	mainmenu:
 	int choose = m.Ve();
 	if (choose == 0)
 	{
 		twoplayer:
 		TheGame g;
+		g.setWinscore(m.WinScore());
 		g.PlayMainMusic();
 		
 		while (!g.getWindow()->IsDone())
@@ -44,6 +43,7 @@ int main()
 	{
 	oneplayer:
 		VsBotMode g;
+		g.setWinscore(m.WinScore());
 		g.PlayMainMusic();
 		while (!g.getWindow()->IsDone())
 		{

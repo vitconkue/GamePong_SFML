@@ -26,6 +26,7 @@ private :
 	sf::SoundBuffer scorebuf;
 	sf::SoundBuffer winbuf;
 	sf::Sound mainsound;
+	int winscore;
 public : 
 	// constructor cho game
 	TheGame();
@@ -49,5 +50,6 @@ public :
 	int CheckWinnerAndEndGame();
 	string toString(int);
 	void PlayMainMusic();
+	void setWinscore(int);
 };
 

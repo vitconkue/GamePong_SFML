@@ -27,6 +27,8 @@ private:
 	sf::SoundBuffer scorebuf;
 	sf::SoundBuffer winbuf;
 	sf::Sound mainsound;
+	int winscore;
+
 public:
 	VsBotMode();
 	~VsBotMode() {};
@@ -40,6 +42,7 @@ public:
 	void checkBallCollusionWithPaddleAndLeftRightWall();
 	int CheckWinnerAndEndGame();
 	void PlayMainMusic();
+	void setWinscore(int);
 	string toString(int);
 };
 

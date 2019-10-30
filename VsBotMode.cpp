@@ -138,7 +138,7 @@ void VsBotMode::Render()
 	p2.setPosition(700, 50);
 	p1.setString(toString(point1));
 	p2.setString(toString(point2));
-	if (point1 == 3)
+	if (point1 == winscore)
 	{
 		p1.setString(toString(point1));
 		winner.setFont(font);
@@ -150,7 +150,7 @@ void VsBotMode::Render()
 		winner.setString("BOT WIN");
 		m_GameScreen.Display(winner);
 	}
-	if (point2 == 3)
+	if (point2 == winscore)
 	{
 		p2.setString(toString(point2));
 		winner.setFont(font);
@@ -165,14 +165,14 @@ void VsBotMode::Render()
 	m_GameScreen.Display(p1);
 	m_GameScreen.Display(p2);
 	m_GameScreen.InLenManHinh();
-	if (point1 == 3 || point2 == 3)
+	if (point1 == winscore || point2 == winscore)
 	{
 		//Dung nhac nen, phat nhac win
 		mainsound.stop();
 		sf::Sound s;
 		s.setBuffer(winbuf);
 		s.play();
-		Sleep(5000);
+		Sleep(3000);
 	}
 }
 
@@ -280,14 +280,23 @@ void VsBotMode::BotMove()
 	//Bot lv 2
 	if (ballpos.y > 90 && ballpos.y < 510)
 	{
-		if (botpos.y < ballpos.y)
+		if (botpos.y - ballpos.y <= -level*3 || botpos.y - ballpos.y >= level*3)
 		{
-			newbotposition.y = botpos.y + 5;
-			bot.setPosition(newbotposition);
+
+			if (botpos.y < ballpos.y)
+			{
+				newbotposition.y = botpos.y + level*3;
+				bot.setPosition(newbotposition);
+			}
+			else if (botpos.y > ballpos.y)
+			{
+				newbotposition.y = botpos.y - level*3;
+				bot.setPosition(newbotposition);
+			}
 		}
-		else if (botpos.y > ballpos.y)
+		else
 		{
-			newbotposition.y = botpos.y - 5;
+			newbotposition.y = ballpos.y;
 			bot.setPosition(newbotposition);
 		}
 	}
@@ -308,13 +317,13 @@ void VsBotMode::PlayMainMusic()
 
 int VsBotMode::CheckWinnerAndEndGame()
 {
-	if (point1 == 3)
+	if (point1 == winscore)
 	{
 		//std::cout << "Player 1 wins" << std::endl;
 		m_ball.setSpeed(0.0f);
 		return 1;
 	}
-	if (point2 == 3)
+	if (point2 == winscore)
 	{
 		//std::cout << "Player 2 wins" << std::endl;
 		m_ball.setSpeed(0.0f);
@@ -340,4 +349,10 @@ string VsBotMode::toString(int a)
 		swap(str[i], str[str.length() - i - 1]);
 	}
 	return str;
+}
+
+
+void VsBotMode::setWinscore(int a)
+{
+	winscore = a;
 }
