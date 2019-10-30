@@ -40,7 +40,7 @@ void TheGame::Reset()
 	player1.setPosition(20 + player1.getSize().x / 2, wsize.y / 2);
 	player2.setPosition(wsize.x - 20 - player2.getSize().x / 2, wsize.y / 2);
 	m_ball.setSpeed(3.0f);
-	m_ball.setBasicDirect(sf::Vector2f(1.0f, 1.0f));
+	m_ball.setBasicDirect(sf::Vector2f(1.0, 1.0)); 
 }
 
 void TheGame::ResetAll()
@@ -53,7 +53,6 @@ void TheGame::ResetAll()
 	m_ball.setSpeed(3.0f);
 	point1 = 0;  
 	point2 = 0; 
-	m_ball.setBasicDirect(sf::Vector2f(1.0f, 1.0f));
 }
 
 ManHinhChoi* TheGame::getWindow()
@@ -144,7 +143,7 @@ void TheGame::Render()
 	p2.setPosition(700, 50);
 	p1.setString(toString(point1));
 	p2.setString(toString(point2));
-	if (point1 == winscore)
+	if (point1 == 3)
 	{
 		p1.setString(toString(point1));
 		winner.setFont(font);
@@ -156,7 +155,7 @@ void TheGame::Render()
 		winner.setString("PLAYER 1 WIN");
 		m_GameScreen.Display(winner);
 	}
-	if (point2 == winscore)
+	if (point2 == 3)
 	{
 		p2.setString(toString(point2));
 		winner.setFont(font);
@@ -171,14 +170,14 @@ void TheGame::Render()
 	m_GameScreen.Display(p1);
 	m_GameScreen.Display(p2);
 	m_GameScreen.InLenManHinh();
-	if (point1 == winscore || point2 == winscore)
+	if (point1 == 3 || point2 == 3)
 	{
 		//Dung nhac nen, phat nhac win
 		mainsound.stop();
 		sf::Sound s;
 		s.setBuffer(winbuf);
 		s.play();
-		Sleep(3000);
+		Sleep(5000);
 	}
 
 }
@@ -186,18 +185,18 @@ void TheGame::Render()
 void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 {
 	// lấy các thành phần cần thiết bằng các getter
-	sf::Event ev;
-	sf::Vector2f ballpos = m_ball.getPosition();
-	sf::Vector2f p1pos = player1.getPosition();
-	sf::Vector2f p2pos = player2.getPosition();
+	sf::Event ev; 
+	sf::Vector2f ballpos = m_ball.getPosition(); 
+	sf::Vector2f p1pos = player1.getPosition(); 
+	sf::Vector2f p2pos = player2.getPosition(); 
 	sf::Vector2f psize = player1.getSize();
-	sf::Vector2f wsize = m_GameScreen.GetWindowSize();
-	float bra = m_ball.getRadius();
+	sf::Vector2f wsize = m_GameScreen.GetWindowSize(); 
+	float bra = m_ball.getRadius(); 
 	// chạm người chơi trái
-	if (ballpos.x - bra <= p1pos.x + psize.x / 2 && m_ball.getBasicDirect().x < 0) // nếu xét x đã chạm
+	if (ballpos.x - bra <= p1pos.x + psize.x / 2  && m_ball.getBasicDirect().x <0) // nếu xét x đã chạm
 	{
-		if (ballpos.y <= p1pos.y + psize.y / 2 + 20 &&
-			ballpos.y >= p1pos.y - psize.y / 2 - 20) // nếu xét y đã chạm
+		if (ballpos.y <= p1pos.y + psize.y / 2 +20 &&
+			ballpos.y >= p1pos.y - psize.y / 2-20 ) // nếu xét y đã chạm
 		{
 			float temp = ballpos.y - p1pos.y;
 			sf::Vector2f newDirect;
@@ -209,11 +208,11 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 			sound.setBuffer(buf);
 			sound.play();
 			Sleep(20);
-		}
+        }
 
 	}
 	// chạm người chơi phải
-	if (ballpos.x + bra >= p2pos.x - psize.x / 2 && m_ball.getPosition().x > 0) // n?u xét x dã ch?m
+	if (ballpos.x + bra >= p2pos.x - psize.x / 2 &&m_ball.getPosition().x > 0 ) // n?u xét x dã ch?m
 	{
 		if (ballpos.y <= p2pos.y + psize.y / 2 + 20 &&
 			ballpos.y >= p2pos.y - psize.y / 2 - 20)
@@ -233,35 +232,35 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 	}
 
 
-	if (ballpos.x < p1pos.x + psize.x / 2)
+	if (ballpos.x < p1pos.x +psize.x/2 )
 	{
 		sf::Sound sound;
 		sound.setBuffer(scorebuf);
 		sound.play();
 		Sleep(1000);
 		point2++;
-		Reset();
+		Reset(); 
 	}
-	if (ballpos.x > p2pos.x - psize.x / 2)
+	if (ballpos.x > p2pos.x -psize.x/2)
 	{
 		sf::Sound sound;
 		sound.setBuffer(scorebuf);
 		sound.play();
 		Sleep(1000);
-		point1++;
-		Reset();
+		point1++; 
+		Reset(); 
 	}
 
 }
 
 int TheGame::CheckWinnerAndEndGame()
 {
-	if (point1 == winscore)
+	if (point1 == 3)
 	{
 		m_ball.setSpeed(0.0f);  
 		return 1;
 	}
-	if (point2 == winscore)
+	if (point2 == 3)
 	{
 		m_ball.setSpeed(0.0f);
 		return 2;
@@ -292,9 +291,4 @@ string TheGame::toString(int a)
 		swap(str[i], str[str.length() - i - 1]);
 	}
 	return str;
-}
-
-void TheGame::setWinscore(int a)
-{
-	winscore = a;
 }
