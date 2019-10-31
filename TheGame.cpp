@@ -8,10 +8,12 @@ TheGame::TheGame() : m_GameScreen(), m_ball(),player1(), player2()
 	player2.setFillColor(sf::Color::Red);
 	player2.setPosition(wsize.x - 20 - player2.getSize().x / 2, wsize.y / 2); // player 2 bên phải màn hình
 	point1 = point2 = 0; 
+	//Load Background Ingame
 	if (!texture.loadFromFile("InGameBackground.png"))
 	{
 		cout << "Load fails";
 	}
+	//Load âm thanh
 	if (!buf.loadFromFile("MenuSound1.ogg"))
 	{
 		cout << "Load fails";
@@ -83,6 +85,7 @@ int TheGame::Input()
 	{
 		Reset(); // nếu nhấn space thì quay lại trạng thái đầu, tuy vậy giữ nguyên điểm
 	}
+	//trường hợp nhấn Ecs
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
 		//Tam dung am thanh khi mo menu
@@ -91,13 +94,17 @@ int TheGame::Input()
 		int chon = m.Pause();
 		if (chon == 1)
 		{
+			//Nếu chọn tiếp tục thì chơi nhạc lại
 			mainsound.play(); 
 		}
 		if (chon == 2)
 		{
-			//Cho phat nhac lai tu dau
+			//Nếu chọn chơi lại từ đầu
+			//Dừng hẵn nhạc
 			mainsound.stop();
+			//Cho chơi lại nhạc
 			mainsound.play();
+			//Set up trò chơi lại từ đầu
 			ResetAll();
 		}
 		if (chon == 3)
@@ -127,6 +134,7 @@ void TheGame::Render()
 
 	//In diem
 	sf::Font font;
+	//Load font
 	if (!font.loadFromFile("PointFont.ttf"))
 	{
 		cout << "Fails to load Point font!!!";
@@ -171,6 +179,7 @@ void TheGame::Render()
 	m_GameScreen.Display(p1);
 	m_GameScreen.Display(p2);
 	m_GameScreen.InLenManHinh();
+	//Xử lí trường hợp 1 trong 2 người thắng
 	if (point1 == winscore || point2 == winscore)
 	{
 		//Dung nhac nen, phat nhac win
@@ -178,6 +187,7 @@ void TheGame::Render()
 		sf::Sound s;
 		s.setBuffer(winbuf);
 		s.play();
+		//Sleep để người chơi thay rõ kết quả
 		Sleep(3000);
 	}
 

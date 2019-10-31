@@ -277,7 +277,7 @@ void VsBotMode::BotMove()
 	sf::Vector2f newbotposition;
 	sf::Vector2f botpos = bot.getPosition();
 	newbotposition.x = bot.getPosition().x;
-	//Bot lv 2
+	//Bot nhiều level có thể build up nếu có thời gian
 	if (ballpos.y > 90 && ballpos.y < 510)
 	{
 		if (botpos.y - ballpos.y <= -level*3 || botpos.y - ballpos.y >= level*3)
@@ -300,7 +300,9 @@ void VsBotMode::BotMove()
 			bot.setPosition(newbotposition);
 		}
 	}
-	////Bot level infinity
+
+	////Bot level infinity (Con bot luôn win). 
+	////Tạm thời khóa vì chưa fix được lỗi
 	//if (ballpos.y > 90 && ballpos.y < 510)
 	//{
 	//	newbotposition.y = ballpos.y;
@@ -310,6 +312,7 @@ void VsBotMode::BotMove()
 }
 void VsBotMode::PlayMainMusic()
 {
+	//Phát nhạc Ingame
 	mainsound.setBuffer(mainbuf);
 	mainsound.play();
 
