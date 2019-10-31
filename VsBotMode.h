@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "ManHinhChoi.h"
 #include <SFML/Graphics.hpp>
@@ -10,7 +10,7 @@
 #include"Menu.h"
 
 using namespace std;
-
+// giải thích tương tự TheGame.h và TheGame.cpp
 class VsBotMode
 {
 private:

@@ -36,16 +36,16 @@ void TheGame::Reset()
 {
 	// set về trạng thái ban đầu ( vẫn giữ điểm)
 	sf::Vector2f wsize = m_GameScreen.GetWindowSize();
-	m_ball.setPosition(wsize.x / 2, wsize.y / 2);
-	player1.setPosition(20 + player1.getSize().x / 2, wsize.y / 2);
-	player2.setPosition(wsize.x - 20 - player2.getSize().x / 2, wsize.y / 2);
-	m_ball.setSpeed(3.0f);
+	m_ball.setPosition(wsize.x / 2, wsize.y / 2); // bóng ở giữa
+	player1.setPosition(20 + player1.getSize().x / 2, wsize.y / 2); // player 1 bên trái
+	player2.setPosition(wsize.x - 20 - player2.getSize().x / 2, wsize.y / 2); // player 2 bên phải
+	m_ball.setSpeed(3.0f); // tốc độ về lại
 	m_ball.setBasicDirect(sf::Vector2f(1.0f, 1.0f)); 
 }
 
 void TheGame::ResetAll()
 {
-	// Reset tất cả khi đã kết thúc game
+	// Reset tất cả khi đã kết thúc game, reset cả điểm
 	sf::Vector2f wsize = m_GameScreen.GetWindowSize();
 	m_ball.setPosition(wsize.x / 2, wsize.y / 2);
 	player1.setPosition(20 + player1.getSize().x / 2, wsize.y / 2);
@@ -81,7 +81,7 @@ int TheGame::Input()
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		Reset(); 
+		Reset(); // nếu nhấn space thì quay lại trạng thái đầu, tuy vậy giữ nguyên điểm
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
@@ -91,7 +91,7 @@ int TheGame::Input()
 		int chon = m.Pause();
 		if (chon == 1)
 		{
-			mainsound.play();
+			mainsound.play(); 
 		}
 		if (chon == 2)
 		{
@@ -111,9 +111,9 @@ void TheGame::Update()
 {
 	// thực hiện tất cả các xử lí cần thiết trong 1 chu trình trước khi render
 	m_GameScreen.Update(); 
-	checkBallCollusionWithPaddleAndLeftRightWall(); 
-	m_ball.MoveBall(&m_GameScreen);
-	int res = CheckWinnerAndEndGame(); 
+	checkBallCollusionWithPaddleAndLeftRightWall(); // kiểm tra chạm tường và người chơi
+	m_ball.MoveBall(&m_GameScreen); // di chuyển bóng
+	int res = CheckWinnerAndEndGame();  // kiểm tra thắng cuộc
 }
 void TheGame::Render()
 {
@@ -202,7 +202,7 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 			float temp = ballpos.y - p1pos.y;
 			sf::Vector2f newDirect;
 			newDirect.x = 1.0;
-			newDirect.y = (temp) / 50;
+			newDirect.y = (temp) / 50;// khoảng cách chạm với tâm của thanh càng lớn thì góc y bật ra càng lớn
 			m_ball.setBasicDirect(newDirect);
 			m_ball.setSpeed(m_ball.getSpeed() * 1.1); // tăng tốc độ 10%
 			sf::Sound sound;
@@ -221,7 +221,7 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 			float temp = ballpos.y - p2pos.y;
 			sf::Vector2f newDirect;
 			newDirect.x = -1.0;
-			newDirect.y = (temp) / 50;
+			newDirect.y = (temp) / 50; // khoảng cách chạm với tâm của thanh càng lớn thì góc y bật ra càng lớn
 			m_ball.setBasicDirect(newDirect);
 			m_ball.setSpeed(m_ball.getSpeed() * 1.1); // tăng tốc độ 10%
 			sf::Sound sound;
@@ -256,6 +256,7 @@ void TheGame::checkBallCollusionWithPaddleAndLeftRightWall()
 
 int TheGame::CheckWinnerAndEndGame()
 {
+	// nếu điểm đã bằng điểm thắng
 	if (point1 == winscore)
 	{
 		m_ball.setSpeed(0.0f);  
@@ -270,6 +271,7 @@ int TheGame::CheckWinnerAndEndGame()
 }
 void TheGame::PlayMainMusic()
 {
+	// nhạc nền game
 	mainsound.setBuffer(mainbuf);
 	mainsound.play();
 }
@@ -277,6 +279,7 @@ void TheGame::PlayMainMusic()
 
 string TheGame::toString(int a)
 {
+	// chuyển đổi số thành chuỗi để in ra màn hình
 	string str = "";
 	if (a == 0)
 	{

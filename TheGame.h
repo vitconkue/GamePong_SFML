@@ -48,8 +48,11 @@ public :
 	void checkBallCollusionWithPaddleAndLeftRightWall(); 
 	// kiếm tra người thắng, kết thúc game
 	int CheckWinnerAndEndGame();
+	// chuyển từ số sang chuỗi để tiện in lên màn hình. 
 	string toString(int);
+	// chơi nhạc nền game
 	void PlayMainMusic();
+	// đặt điểm đạt tới sẽ thắng, người dùng chọn
 	void setWinscore(int);
 };
 
